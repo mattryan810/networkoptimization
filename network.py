@@ -308,4 +308,4 @@ def squarePentagonDemo():
 
   saveAnimation(net,30, threshold = .1)
   
-randomDemo(nodes = 10, edges = 40, chargeRange = 20)
+# randomDemo(nodes = 10, edges = 40, chargeRange = 20)
