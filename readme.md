@@ -75,3 +75,9 @@ Using the program is pretty simple, especially in an interactive environment/not
     You can run randomDemo() or squarePentagonDemo() and fiddle with the randomDemo parameters to generate a couple cool examples
 
 That's about it! There are a couple bugs/oversights I would fix as you could probably break it pretty fast if you really wanted to. It's a personal project, though, so I'm not gonna stress it too bad. In the future I would definitely encapsulate the node updating and physics calculations a bit better, but oh well...
+
+Here are some cool examples of networks it's made:
+
+![Alt Text](examples/long.gif)
+![Alt Text](examples/pentagon.gif)
+![Alt Text](examples/wacky.gif)
