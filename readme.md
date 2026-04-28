@@ -26,7 +26,7 @@ Using the program is pretty simple, especially in an interactive environment/not
     defaulting k = 1
       
     The best way to add nodes at specific points and edges between them is:
-
+     ```python
      # Initialize network
      net = Network()
 
@@ -48,17 +48,18 @@ Using the program is pretty simple, especially in an interactive environment/not
 
      # Or use addNodes/addEdges([nodes/edges]) to add a bunch at once
 
-    
+    ```
 
  3. SAVING ANIMATION
     Once you've got your network all set up, you can save the simulation with certain parameters using
-     
+     ```python
      saveAnimation(network : Network, 
                    framerate : int, 
                    threshold : float = 0.01, 
                    filename : str = "network.gif", 
                    damping : float = 0.95,
                    framelimit : int = None)
+    ```
     where
      network    is your target network
      framerate  is the desired gif framerate
