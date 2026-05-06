@@ -8,12 +8,14 @@ import random as rand
 # CLASSES #################### 
 class Node:
   
-  def __init__(self , pos : list[float] , charge : float = 1 , vel: list[float] = None ):
+  def __init__(self , pos : list[float] , charge : float = 1 , vel: list[float] = None , name : str = None):
     self.pos    : np.typing.NDArray[np.float64]  = np.array([pos[0],pos[1]])
     self.charge : float                          = charge
     self.connections = {}
     self.vel    : np.typing.NDArray[np.float64]  = np.array([0.0,0.0]) if vel is None else np.array([vel[0],vel[1]])
     self.mass                                    = 1
+    self.name = name
+    
     
 class Edge:
   
@@ -63,6 +65,10 @@ class Network:
   def getVelocities(self):
     velocityArray = np.array([node.vel for node in self.nodes])
     return velocityArray
+
+  def getNames(self):
+    nameArray = np.array([node.name for node in self.nodes])
+    return nameArray
   
   def getMaxVelocity(self):
     velocities = vec.norm(self.getVelocities())
@@ -221,6 +227,7 @@ def saveAnimation(network : Network,
   locations = np.array(locations)
   velocities = np.array(velocities)
   edges = np.array(edges)
+  names = np.array(network.getNames())
 
   # This scales the bounds so you can see the equilibrium state well,
   # but the really big behavior doesn't play too much of a role
@@ -244,19 +251,21 @@ def saveAnimation(network : Network,
   lines = LineCollection(edges[0])
   ax.add_collection(lines)
   points = ax.scatter(locations[0,:,0],locations[0,:,1],c='black')
-
+  labels = [ax.text(locations[0,i,0],locations[0,i,1], name) for i,name in enumerate(names)]
 
   def animate(i):
     lines.set_segments(edges[i])
     points.set_offsets(locations[i])
-    return (points,lines)
+    for location, label in zip(locations[i],labels):
+      label.set_position((location[0],location[1]))
+    return (points,lines,*labels)
 
   anim = animation.FuncAnimation(fig, animate, repeat=False, frames=len(locations), interval= 1000 / framerate, blit = True,)
   
   print("Saving ", len(locations), " frames...", end = "\r" , flush = True)
   
   # This function takes OBSCENELY long. Talk to the people at matplotlib about it though, not me...
-  writer = animation.PillowWriter(fps= framerate ,bitrate=1200)
+  writer = animation.PillowWriter(fps= framerate ,bitrate=1800)
   anim.save(filename, writer=writer)
   
   print("Saved.                    ")
